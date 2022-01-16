@@ -2,39 +2,56 @@ const express   = require('express'),
       router    = express.Router(),
       ShortUrl  = require('../models/shortUrl');
 
-router.get('/', async (req, res) => {
+router.get('/', (req, res) => {
     res.redirect('/shortUrls');
 });
 
-router.get('/shortUrls', async (req, res) => {
-    const urls = await ShortUrl.find();
-    res.render('index', { urls: urls });
+router.get('/shortUrls', (req, res) => {
+    ShortUrl.find({}, function(err, urls) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render('index', { urls: urls });
+        }
+    });
 });
 
-router.post('/shortUrls', async (req, res) => {
-    await ShortUrl.create({ full: req.body.fullUrl });
-    res.redirect('/');
+router.post('/shortUrls', (req, res) => {
+    ShortUrl.create({ full: req.body.fullUrl }, function(err, url) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect('/');
+        }
+    });
 });
 
 router.delete('/shortUrls/:id', (req, res) => {
     ShortUrl.findByIdAndRemove(req.params.id, function(err) {
         if (err) {
             console.log(err);
+            res.redirect('/shortUrls');
+        } else {
+            res.redirect('/shortUrls');
         }
     });
-    res.redirect('/shortUrls');
 });
 
-router.get('/:shortUrl', async (req, res) => {
-    const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl });
-    if (shortUrl == null) {
-        return res.sendStatus(404);
-    }
-
-    shortUrl.clicks++;
-    shortUrl.save();
-
-    res.redirect(shortUrl.full);
+router.get('/:shortUrl', (req, res) => {
+    ShortUrl.findOne({ short: req.params.shortUrl }, function(err, shortUrl) {
+        if (err) {
+            console.log(err);
+        } else {
+            if (shortUrl == null) {
+                return res.sendStatus(404);
+            }
+        
+            shortUrl.clicks++;
+            shortUrl.save();
+        
+            res.redirect(shortUrl.full);
+        }
+    });
 });
 
 module.exports = router;
