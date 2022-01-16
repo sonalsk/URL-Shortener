@@ -5,7 +5,7 @@ const mongoose  = require('mongoose'),
       methodOverride   = require('method-override');
 
 const url = process.env.DATABASEURL || 'mongodb://localhost/urlShortner';
-mongoose.connect(url, {
+mongoose.connect('mongodb+srv://sonalsk:sonalsk@url-shortner.yjxqf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
     useNewUrlParser: true, useUnifiedTopology: true
 });
 
