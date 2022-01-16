@@ -4,7 +4,8 @@ const mongoose  = require('mongoose'),
       ShortUrl  = require('./routes/shortUrl'),
       methodOverride   = require('method-override');
 
-mongoose.connect('mongodb://localhost/urlShortner', {
+const url = process.env.DATABASEURL || 'mongodb://localhost/urlShortner';
+mongoose.connect(url, {
     useNewUrlParser: true, useUnifiedTopology: true
 });
 
