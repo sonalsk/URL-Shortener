@@ -18,31 +18,34 @@
                 <input class="form-control col me-3" required type="url" name="fullUrl" id="fullUrl" placeholder="Url">
                 <button type="submit" class="btn style-btn"> Shrink </button>
             </form>
-            <table class="table table-striped table-responsive urls">
-                <thead class="head">
-                    <tr>
-                        <th> Full URL </th>
-                        <th> Short Url </th>
-                        <th> Clicks </th>
-                        <th> Action </th>
-                    </tr>
-                </thead>
 
-                <tbody class="body">
-                    <% urls.forEach(url => { %>
+            <div class="table-responsive">
+                <table class="table table-striped urls">
+                    <thead class="head">
                         <tr>
-                            <td> <a href="<%= url.full %>"> <%= url.full %> </a> </td>
-                            <td> <a href="<%= url.short %>"> <%= url.short %> </a> </td>
-                            <td> <%= url.clicks %> </td>
-                            <td>
-                                <form action="/shortUrls/<%= url._id %>?_method=DELETE" method="POST">
-                                    <button type="submit" class="btn style-btn btn-sm"> Delete </button>
-                                </form>
-                            </td>
+                            <th> Full URL </th>
+                            <th> Short Url </th>
+                            <th> Clicks </th>
+                            <th> Action </th>
                         </tr>
-                    <% }); %>
-                </tbody>
-            </table>
+                    </thead>
+
+                    <tbody class="body">
+                        <% urls.forEach(url => { %>
+                            <tr>
+                                <td> <a href="<%= url.full %>"> <%= url.full %> </a> </td>
+                                <td> <a href="<%= url.short %>"> <%= url.short %> </a> </td>
+                                <td> <%= url.clicks %> </td>
+                                <td>
+                                    <form action="/shortUrls/<%= url._id %>?_method=DELETE" method="POST">
+                                        <button type="submit" class="btn style-btn btn-sm"> Delete </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
         </div>        
     </div>
 </body>
